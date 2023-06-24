@@ -1,0 +1,22 @@
+.chatlist .active {
+  background-color: var(--chakra-colors-blackAlpha-50);
+}
+.chatlist .active .chatlist-item-link {
+  color: var(--chakra-colors-black);
+}
+
+.chatlist-item {
+  background-color: var(--chakra-colors-white);
+}
+.chatlist-item:hover {
+  background-color: var(--chakra-colors-blackAlpha-50);
+}
+.chatlist-item-link {
+  display: block;
+  border-bottom: 1px solid;
+  border-bottom-color: var(--chakra-colors-gray-100);
+  color: var(--chakra-colors-blackAlpha-700);
+}
+.chatlist-item-link:hover {
+  color: var(--chakra-colors-black);
+}

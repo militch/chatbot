@@ -1,0 +1,17 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--chakra-sizes-60);
+}
+
+.sidebar-brand {
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-title {
+  font-size: var(--chakra-fontSizes-xl);
+  font-weight: var(--chakra-fontWeights-semibold);
+}
