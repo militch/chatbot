@@ -1,0 +1,3 @@
+.chatdetail-list-item:hover {
+  background-color: var(--chakra-colors-blackAlpha-50);
+}
