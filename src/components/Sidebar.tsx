@@ -1,12 +1,14 @@
-import './Sidebar.css';
-
 import {
   Button,
   Center,
   Box,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import ChatList from './ChatList';
+
+import './Sidebar.css';
+import NewChatModal from './NewChatModal';
 
 interface SidebarBrandProps {
   title?: string;
@@ -28,6 +30,7 @@ export interface SidebarProps{
   onNewChat?:()=>void;
 }
 function Sidebar(props:SidebarProps){
+  const {onOpen, isOpen, onClose} = useDisclosure();
   return (
     <Box 
       borderX='1px'
@@ -44,10 +47,14 @@ function Sidebar(props:SidebarProps){
       >
         <Button w='100%' colorScheme='teal'
           variant='solid'
-          onClick={props.onNewChat}
+          onClick={onOpen}
         >
           New Chat
         </Button>
+        <NewChatModal 
+          isOpen={isOpen}
+          onClose={onClose}
+        />
       </Center>
       <ChatList />
     </Box>

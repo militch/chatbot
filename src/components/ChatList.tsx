@@ -10,9 +10,10 @@ import {
 import './ChatList.css';
 
 interface ChatListProps {
-  title?: String;
+  title?: string;
   children?: ReactNode;
   active?: boolean;
+  link?: string;
 }
 
 function ChatListItem(props: ChatListProps){
@@ -28,7 +29,7 @@ function ChatListItem(props: ChatListProps){
       <Box as='li'
       backgroundColor={itemBgColor} 
       className='chatlist-item'>
-        <Box as='a' href='/#'
+        <Box as='a' href={props?.link??'/#'}
           color={linkColor}
           className='chatlist-item-link'
           px='8'
@@ -57,13 +58,13 @@ function ChatList(){
     return <EmptyChat/>
   }
   return (
-  <Box>
     <Box className='chatlist' as='ul'
         borderTop='1px'
         borderColor='gray.100'
     >
       <ChatListItem
         title='会话1'
+          link='/chat/12'
       />
       <ChatListItem
         title='会话2'
@@ -71,7 +72,6 @@ function ChatList(){
       <ChatListItem
         title='会话3'
       />
-    </Box>
     </Box>
   );
 }

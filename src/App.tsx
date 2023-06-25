@@ -1,18 +1,26 @@
 import { ReactNode } from 'react';
 import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+} from 'react-router-dom';
+import {
   Box,
   Button,
   Center,
   Text,
   Heading,
   useDisclosure,
-  Container,
 } from '@chakra-ui/react';
 
-import Sidebar, { SidebarProps } from './Sidebar';
-import ChatDetail from './ChatDetail';
+import Sidebar, {
+  SidebarProps,
+} from './components/Sidebar';
 
-import NewChatModal from './NewChatModal';
+import ChatDetail from './components/ChatDetail';
+
+import NewChatModal from './components/NewChatModal';
 
 interface PageMainProps {
   children?: ReactNode;
@@ -31,12 +39,11 @@ interface AppLayoutProps extends SidebarProps {
 }
 
 function AppLayout(props: AppLayoutProps) {
-  const { children, onNewChat } = props;
   return (
     <Box>
-      <Sidebar onNewChat={onNewChat} />
+      <Sidebar />
       <PageMain>
-        {children}
+        {props?.children??<Outlet />}
       </PageMain>
     </Box>
   )
@@ -64,24 +71,28 @@ function AppEmpty(props?: AppEmptyProps) {
   );
 }
 
-function App() {
-  let empty: boolean = false;
-  const { isOpen, onOpen, onClose } = useDisclosure();
+function ErrorPage(){
   return (
-    <>
-      <AppLayout
-        onNewChat={onOpen}
-      >
-        {empty ?
-          <AppEmpty
-            onNewChat={onOpen}
-          /> : <ChatDetail />}
-      </AppLayout>
-      <NewChatModal
-        isOpen={isOpen}
-        onClose={onClose}
-      />
-    </>
+  <Heading as='h1'>Error</Heading>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path='/' 
+          element={<AppLayout />}
+        >
+          <Route index element={<AppEmpty/>} />
+          <Route path='/chat/:chatId' 
+            element={<ChatDetail />} 
+            />
+          <Route path='*' element={<ErrorPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
