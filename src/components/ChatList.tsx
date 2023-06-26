@@ -4,19 +4,18 @@ import {
 
 import {
   Box,
-  Text,
 } from '@chakra-ui/react';
 
 import './ChatList.css';
 
-interface ChatListProps {
-  title?: string;
+interface ChatListItemProps {
+  name?: string;
   children?: ReactNode;
   active?: boolean;
   link?: string;
 }
 
-function ChatListItem(props: ChatListProps){
+export function ChatListItem(props: ChatListItemProps){
   let itemBgColor = '';
   if (props.active){
     itemBgColor = 'blackAlpha.50';
@@ -35,43 +34,24 @@ function ChatListItem(props: ChatListProps){
           px='8'
           py='3'
         >
-          {props.title?props.title:props.children??''}
+          {props.name?props.name:props.children??''}
         </Box>
       </Box>
   );
 }
 
-function EmptyChat(){
-  return (
-      <Text
-        paddingTop='3'
-        borderTop='1px'
-        borderColor='gray.100'
-        paddingX='8'
-      >Empty Chats</Text>
-  );
-}
 
-function ChatList(){
-  const empty = false;
-  if (empty) {
-    return <EmptyChat/>
-  }
+
+export interface ChatListProps {
+  children?: ReactNode;
+}
+function ChatList(props: ChatListProps){
   return (
     <Box className='chatlist' as='ul'
         borderTop='1px'
         borderColor='gray.100'
     >
-      <ChatListItem
-        title='会话1'
-          link='/chat/12'
-      />
-      <ChatListItem
-        title='会话2'
-      />
-      <ChatListItem
-        title='会话3'
-      />
+      {props.children}
     </Box>
   );
 }

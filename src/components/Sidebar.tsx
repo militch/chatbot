@@ -1,20 +1,19 @@
+import { ReactNode } from 'react';
+
 import {
   Button,
   Center,
   Box,
-  useDisclosure,
+  ButtonProps,
 } from '@chakra-ui/react';
 
-import ChatList from './ChatList';
-
 import './Sidebar.css';
-import NewChatModal from './NewChatModal';
 
-interface SidebarBrandProps {
+export interface SidebarBrandProps {
   title?: string;
 }
 
-function SidebarBrand({title}:SidebarBrandProps) {
+export function SidebarBrand({ title }: SidebarBrandProps) {
   return (
     <Box as='a'
       py='4'
@@ -26,37 +25,47 @@ function SidebarBrand({title}:SidebarBrandProps) {
     </Box>
   );
 }
-export interface SidebarProps{
-  onNewChat?:()=>void;
+
+export interface SidebarButtonGroupProps {
+  children?: ReactNode;
 }
-function Sidebar(props:SidebarProps){
-  const {onOpen, isOpen, onClose} = useDisclosure();
+export function SidebarButtonGroup(props: SidebarButtonGroupProps) {
   return (
-    <Box 
+    <Center px='6' py='4'
+      borderTop='1px'
+      borderColor='gray.100'
+    >
+      {props?.children}
+    </Center>
+  );
+}
+
+export function SidebarButton(props: ButtonProps) {
+  return (
+    <Button
+      w='100%'
+      colorScheme='teal'
+      variant='solid'
+      {...props}
+    >
+      {props.children}
+    </Button>
+  );
+}
+
+export interface SidebarProps {
+  children?: ReactNode;
+}
+
+function Sidebar(props: SidebarProps) {
+  return (
+    <Box
       borderX='1px'
       borderColor='gray.100'
       background='white'
       className='sidebar'
     >
-      <SidebarBrand 
-        title='UCHAT'
-        />
-      <Center px='6' py='4'
-        borderTop='1px'
-        borderColor='gray.100'
-      >
-        <Button w='100%' colorScheme='teal'
-          variant='solid'
-          onClick={onOpen}
-        >
-          New Chat
-        </Button>
-        <NewChatModal 
-          isOpen={isOpen}
-          onClose={onClose}
-        />
-      </Center>
-      <ChatList />
+      {props.children}
     </Box>
   );
 }
