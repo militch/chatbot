@@ -176,6 +176,7 @@ function ChatDetailHeader() {
 interface ChatDetailItemProps {
   send?: string;
   message?: string;
+  createTime?: string;
 }
 function ChatDetailItem(props: ChatDetailItemProps) {
   return (
@@ -195,7 +196,7 @@ function ChatDetailItem(props: ChatDetailItemProps) {
           color='gray.800'
           mr='1'
         >
-          12:00
+          {props?.createTime}
         </Text>
       </Flex>
       <Text>
