@@ -5,9 +5,16 @@ import{
   Text,
 } from '@chakra-ui/react';
 
+interface ChatListItem {
+  id?: number;
+  name?: string;
+}
+
 interface AppLayoutContextProps {
   isLoading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setChatList: (v: Array<ChatListItem>)=>void;
+  chatList: Array<ChatListItem>;
 }
 
 const AppLayoutContext = createContext<AppLayoutContextProps | undefined>(undefined);
@@ -39,11 +46,14 @@ function AppLoading() {
 interface AppLayoutProviderProps {
   children: ReactNode,
 }
+
+
 export function AppLayoutProvider({children}: AppLayoutProviderProps){
   const [isLoading, setLoading] = useState(false);
+  const [chatList, setChatList] = useState<Array<ChatListItem>>([]);
   return (
     <AppLayoutContext.Provider
-      value={{isLoading, setLoading}}
+      value={{isLoading, setLoading, chatList, setChatList}}
     >
       {children}
       {isLoading && (<AppLoading />)}

@@ -189,10 +189,13 @@ function ChatDetailItem(props: ChatDetailItemProps) {
       width='100%' 
       flexDirection='column'>
       <Flex mb='1' flexDirection='row' alignItems='baseline'>
-        <Text mr='1' fontSize='lg'>
+        <Text mr='1'
+          color='gray.600'
+          fontSize='sm'
+        >
           {props.send}
         </Text>
-        <Text fontSize='sm' 
+        <Text fontSize='lg' 
           color='gray.800'
           mr='1'
         >

@@ -1,3 +1,7 @@
+.chatlist {
+  flex: 1;
+  overflow-y: auto;
+}
 .chatlist .active {
   background-color: var(--chakra-colors-blackAlpha-50);
 }
@@ -18,5 +22,6 @@
   color: var(--chakra-colors-blackAlpha-700);
 }
 .chatlist-item-link:hover {
+  text-decoration: initial!important;
   color: var(--chakra-colors-black);
 }

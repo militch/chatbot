@@ -12,10 +12,12 @@ import {
   Select,
   Button,
 } from '@chakra-ui/react';
+import { FormEventHandler } from 'react';
 
 export interface NewChatModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: FormEventHandler;
 }
 
 function NewChatModal(props: NewChatModalProps) {
@@ -26,6 +28,7 @@ function NewChatModal(props: NewChatModalProps) {
     >
       <ModalOverlay />
       <ModalContent>
+        <form onSubmit={props?.onSubmit}>
         <ModalHeader>Create New Chat</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
@@ -42,13 +45,14 @@ function NewChatModal(props: NewChatModalProps) {
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme='teal' mr={3}>
+          <Button colorScheme='teal' mr={3} type='submit'>
             Submit
           </Button>
           <Button onClick={onClose}>
             Cancel
           </Button>
         </ModalFooter>
+        </form>
       </ModalContent>
     </Modal>
   );

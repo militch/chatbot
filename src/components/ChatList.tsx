@@ -4,7 +4,12 @@ import {
 
 import {
   Box,
+  Link,
 } from '@chakra-ui/react';
+
+import {
+  Link as ReachLink
+} from 'react-router-dom';
 
 import './ChatList.css';
 
@@ -28,14 +33,14 @@ export function ChatListItem(props: ChatListItemProps){
       <Box as='li'
       backgroundColor={itemBgColor} 
       className='chatlist-item'>
-        <Box as='a' href={props?.link??'/#'}
+        <Link as={ReachLink} to={props?.link??'/#'}
           color={linkColor}
           className='chatlist-item-link'
           px='8'
           py='3'
         >
           {props.name?props.name:props.children??''}
-        </Box>
+        </Link>
       </Box>
   );
 }

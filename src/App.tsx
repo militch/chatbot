@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { FormEvent, FormEventHandler, ReactNode, useEffect, useMemo, useState } from 'react';
 
 import {
   BrowserRouter,
@@ -81,9 +81,9 @@ const chatListData = [
   },
 ];
 
-
 function SidebarNewChatButton() {
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const {chatList,setChatList} = useAppLayout();
   return (
     <>
       <SidebarButton
@@ -92,6 +92,12 @@ function SidebarNewChatButton() {
         New Chat
       </SidebarButton>
       <NewChatModal
+        onSubmit={(e)=>{
+          e.preventDefault();
+          chatList.push({id: 90, name: 'aaa'});
+          setChatList([...chatList]);
+          onClose();
+        }}
         isOpen={isOpen}
         onClose={onClose}
       />
@@ -104,7 +110,6 @@ interface ChatListItem {
   name?: string;
 }
 
-
 function fakeRequestGetChatList(){
   return new Promise<Array<ChatListItem>>((resolve, reject)=>{
     setTimeout(()=>{
@@ -113,7 +118,7 @@ function fakeRequestGetChatList(){
   });
 }
 
-function useAppLayoutLoadingRequest<T>(fn: ()=>Promise<T>){
+function useAppLayoutLoadingRequest<T>(fn: ()=>Promise<T>, params: any){
   const {setLoading} = useAppLayout();
   return useRequest(fn, {
     onBefore: ()=>{
@@ -121,12 +126,18 @@ function useAppLayoutLoadingRequest<T>(fn: ()=>Promise<T>){
     },
     onFinally: ()=>{
       setLoading(false);
-    }
+    },
+    ...params
   });
 }
 
 function AppSidebar() {
-  const {data} = useAppLayoutLoadingRequest(fakeRequestGetChatList);
+  const {chatList,setChatList} = useAppLayout();
+  useAppLayoutLoadingRequest(fakeRequestGetChatList, {
+    onSuccess: (data: Array<ChatListItem>)=>{
+      setChatList(data);
+    }
+  });
   return (
     <Sidebar>
       <SidebarBrand title='UCHAT' />
@@ -134,7 +145,7 @@ function AppSidebar() {
         <SidebarNewChatButton />
       </SidebarButtonGroup>
       <ChatList>
-        {(data && data.length > 0 )? data?.map((val) => {
+        {(chatList && chatList.length > 0 )? chatList?.map((val) => {
           return (
             <ChatListItem
               key={`chatListItem-${val.id}`}
@@ -167,11 +178,7 @@ function AppLayout(props: AppLayoutProps) {
   );
 }
 
-interface AppEmptyProps {
-  onNewChat?: () => void;
-}
-
-function AppEmpty(props?: AppEmptyProps) {
+function AppEmpty() {
   return (
     <Center minH='calc(100vh)' flexDirection='column'>
       <Heading as='h1'>
@@ -180,11 +187,6 @@ function AppEmpty(props?: AppEmptyProps) {
       <Text mb='2'>
         You can choose a Chat here or create a new one.
       </Text>
-      <Button colorScheme='teal' size='md'
-        onClick={props?.onNewChat}
-      >
-        New Chat
-      </Button>
     </Center>
   );
 }
